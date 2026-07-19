@@ -1,0 +1,119 @@
+/* Универсальный контейнер автоматической формы */
+.form-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Горизонтальная строка (Текст слева, контрол справа) */
+.form-panel label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 28px;
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--font-size-default);
+  color: var(--figma-color-text, #333333);
+}
+
+/* Вертикальная строка (Текст сверху, инпут снизу) */
+.form-panel label.form-panel__vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 4px;
+  height: auto;
+  cursor: default;
+}
+
+.form-panel label > span {
+  color: var(--figma-color-text, #333333);
+  font-size: var(--font-size-default);
+}
+
+/* Текстовые инпуты */
+.form-panel input[type="text"], 
+.form-panel input[type="number"] {
+  font-family: var(--font-stack);
+  font-size: var(--font-size-default);
+  background-color: var(--figma-color-bg-secondary, #f5f5f5);
+  color: var(--figma-color-text, #333333);
+  border: 1px solid var(--figma-color-border, #e6e6e6);
+  border-radius: var(--radius-medium, 6px);
+  padding: 0 var(--spacing-sm);
+  height: 28px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.1s ease, background-color 0.1s ease;
+}
+
+.form-panel input[type="text"]:focus, 
+.form-panel input[type="number"]:focus {
+  border-color: var(--figma-color-border-selected, #0c8ce9);
+  background-color: var(--figma-color-bg-primary, #ffffff);
+}
+
+/* Компактный размер инпутов, если они лежат внутри горизонтальной строки */
+.form-panel label:not(.form-panel__vertical) > input[type="text"],
+.form-panel label:not(.form-panel__vertical) > input[type="number"] {
+  width: 70px;
+  text-align: right;
+}
+
+/* Нативный пикер цвета Figma */
+.form-panel input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  width: 28px;
+  height: 20px;
+  border-radius: var(--radius-small, 2px);
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+}
+.form-panel input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.form-panel input[type="color"]::-webkit-color-swatch {
+  border: 1px solid var(--figma-color-border, #e6e6e6);
+  border-radius: var(--radius-small, 2px);
+}
+
+/* Тонкий разделитель блоков внутри формы */
+.form-panel .form-divider {
+  border: none;
+  border-top: 1px solid var(--figma-color-border, #e6e6e6);
+  margin: 4px 0;
+  width: 100%;
+}
+
+/* Пункты выпадающих списков и Popover-меню */
+.menu-item {
+  background: transparent !important;
+  border: none !important;
+  font-family: var(--font-stack);
+  font-size: var(--font-size-default);
+  color: var(--figma-color-text, #333333) !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+  width: 100%;
+  height: 24px !important;
+  padding: 0 var(--spacing-sm) !important;
+  border-radius: var(--radius-medium, 4px) !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.08s ease;
+}
+
+.menu-item:hover {
+  background-color: var(--figma-color-bg-secondary-hover, #e6e6e6) !important;
+}
+
+.menu-divider {
+  height: 1px;
+  background-color: var(--figma-color-border, #e6e6e6);
+  margin: 4px 0;
+  width: 100%;
+}

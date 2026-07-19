@@ -1,0 +1,19 @@
+:root {
+  /* Системные шрифты Figma */
+  --font-stack: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-size-small: 11px;
+  --font-size-default: 12px;
+  --font-size-large: 13px;
+
+  /* Нативные радиусы скруглений */
+  --radius-small: 2px;
+  --radius-medium: 6px;
+  --radius-large: 8px;
+
+  /* Сетка отступов (зазоров) */
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+}

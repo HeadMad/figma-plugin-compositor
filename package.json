@@ -1,0 +1,28 @@
+{
+  "name": "figma-plugin-template",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "clear": "node -e \"const fs = require('fs'); if (fs.existsSync('dist')) fs.rmSync('dist', { recursive: true, force: true });\"",
+    "barrel": "node scripts/barrel.js",
+    "barrel:watch": "node scripts/barrel.js --watch",
+    "build:code": "vite build --config vite.config.code.js",
+    "build:ui": "vite build --config vite.config.ui.js",
+    "build": "npm run clear && npm run barrel && npm run build:code && npm run build:ui",
+    "dev:code": "vite build --config vite.config.code.js --watch",
+    "dev:ui": "vite build --config vite.config.ui.js --watch",
+    "dev": "npm run clear && concurrently \"npm run barrel:watch\" \"npm run dev:code\" \"npm run dev:ui\""
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "concurrently": "^10.0.3",
+    "svelte": "^5.56.4",
+    "vite": "^8.1.1",
+    "vite-plugin-singlefile": "^2.3.3",
+    "vite-plugin-static-copy": "^4.1.1"
+  },
+  "dependencies": {
+    "svelte-super": "^2.0.2"
+  }
+}

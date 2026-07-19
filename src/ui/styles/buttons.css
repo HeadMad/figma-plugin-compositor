@@ -1,0 +1,88 @@
+button {
+  font-family: var(--font-stack);
+  font-size: var(--font-size-default);
+  font-weight: 500;
+  height: 32px;
+  padding: 0 var(--spacing-md);
+  border-radius: var(--radius-medium);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: background-color 0.1s ease, border-color 0.1s ease;
+  
+  /* Разновидность по умолчанию: PRIMARY */
+  background-color: var(--figma-color-bg-brand, #0c8ce9);
+  color: var(--figma-color-text-onbrand, #ffffff);
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--figma-color-bg-brand-hover, #0a76c5);
+}
+
+button:active:not(:disabled) {
+  background-color: var(--figma-color-bg-brand-pressed, #085a96);
+}
+
+button:disabled {
+  background-color: var(--figma-color-bg-disabled, #e6e6e6);
+  color: var(--figma-color-text-disabled, #b3b3b3);
+  border-color: transparent;
+  cursor: not-allowed;
+}
+
+/* Разновидность: SECONDARY */
+button.secondary {
+  background-color: transparent;
+  color: var(--figma-color-text, #333333);
+  border: 1px solid var(--figma-color-border, #e6e6e6);
+}
+
+button.secondary:hover:not(:disabled) {
+  background-color: var(--figma-color-bg-secondary, #f5f5f5);
+  border-color: var(--figma-color-border-strong, #b3b3b3);
+}
+
+button.secondary:active:not(:disabled) {
+  background-color: var(--figma-color-bg-secondary-hover, #e6e6e6);
+}
+
+/* Разновидность: DESTRUCTIVE */
+button.destructive {
+  background-color: var(--figma-color-bg-danger, #f24822);
+  color: var(--figma-color-text-oncomponent, #ffffff);
+}
+
+button.destructive:hover:not(:disabled) {
+  background-color: var(--figma-color-bg-danger-hover, #dc3b1b);
+}
+
+button.destructive:active:not(:disabled) {
+  background-color: var(--figma-color-bg-danger-pressed, #b82e14);
+}
+
+/* Разновидность: LINK / MINIMAL */
+button.link {
+  background-color: transparent;
+  color: var(--figma-color-text-brand, #0c8ce9);
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+}
+
+button.link:hover:not(:disabled) {
+  color: var(--figma-color-text-brand-hover, #0a76c5);
+  text-decoration: underline;
+}
+
+button.link:active:not(:disabled) {
+  color: var(--figma-color-text-brand-pressed, #085a96);
+}
+
+button.link:disabled {
+  background-color: transparent;
+  color: var(--figma-color-text-disabled, #b3b3b3);
+  text-decoration: none;
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Svelte Plugin Template",
+  "id": "YOUR_PLUGIN_ID",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": ["figma"]
+}
