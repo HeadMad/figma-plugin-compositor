@@ -1,4 +1,5 @@
 export { default as Dropdown } from './form/Dropdown.svelte';
+export { default as InputWithSuffix } from './form/InputWithSuffix.svelte';
 export { default as Modal, showModal } from './overlay/Modal.svelte';
 export { default as NumberInput } from './form/NumberInput.svelte';
 export { default as Popover } from './overlay/Popover.svelte';

@@ -1,15 +1,23 @@
 import { figma } from './utils/index.js';
 
-// Объявляем реактивный стейт с дефолтными значениями через руну
 const data = $state({
-  count: 1,
-  rectColor: '#0C8CE9',
-  showAdvancedSettings: false,
-  selectedShape: 'RECTANGLE'
+  ppi: 300,
+  unit: 'mm',
+  selectedPreset: 'A4',
+  sheetWidth: 297,
+  sheetHeight: 210,
+  padding: 5,
+  createComponent: true,
+  shapeType: 'RECTANGLE',
+  shapeWidth: 65,
+  shapeHeight: 45,
+  gap: 5,
+  alignX: 'C',
+  alignY: 'C',
+  genGuides: true,
+  shapeColor: '#7B61FF'
 });
 
-// Передаем реактивную ссылку в Proxy-обертку клиентской памяти Figma.
-// При старте дефолтные значения затрутся кэшем из figma.clientStorage.
-const settings = figma.getClientStorage('plugin-persistent-config', data);
+const settings = figma.getDocumentStorage('compositor-settings', data);
 
 export default settings;

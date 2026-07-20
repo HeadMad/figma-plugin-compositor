@@ -1,7 +1,7 @@
 import { sendToUi } from './utils/sendToUi.js';
 
 // Открываем нативный веб-интерфейс плагина в iframe
-figma.showUI(__html__, { width: 280, height: 200, themeColors: true });
+figma.showUI(__html__, { width: 320, height: 515, themeColors: true });
 
 /**
  * Считывает текущее выделение на холсте и отправляет его количество в UI

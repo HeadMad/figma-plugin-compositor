@@ -26,3 +26,33 @@ html, body {
   color: var(--figma-color-text-tertiary, #b3b3b3);
   line-height: 14px;
 }
+
+/* Белые галочки в чекбоксах на синем фоне */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--figma-color-border, #e6e6e6);
+  border-radius: 3px;
+  background: var(--figma-color-bg-primary, #fff);
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background: var(--figma-color-bg-brand, #18a0fb);
+  border-color: var(--figma-color-bg-brand, #18a0fb);
+}
+
+input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  width: 5px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}

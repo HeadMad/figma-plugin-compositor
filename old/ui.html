@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Inter, sans-serif; font-size: 11px; margin: 0; padding: 12px; color: #333; background: #fff; user-select: none; box-sizing: border-box; overflow: hidden; height: 515px; }
+    .row { display: flex; gap: 8px; margin-bottom: 10px; align-items: flex-end; }
+    .col { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .section { border: 1px solid #e6e6e6; border-radius: 6px; padding: 10px; margin-bottom: 10px; position: relative; }
+    .section-title { font-weight: 600; margin-bottom: 8px; font-size: 11px; color: #111; display: flex; justify-content: space-between; align-items: center; }
+    label { color: #888; font-size: 10px; font-weight: 500; }
+    .lbl-top { margin-bottom: 2px; display: block; }
+    .input-wrap { display: flex; align-items: center; border: 1px solid #e6e6e6; border-radius: 4px; padding: 4px 8px; height: 24px; box-sizing: border-box; background: #fff; }
+    .input-wrap:focus-within { border-color: #18a0fb; }
+    input[type="number"] { border: none; outline: none; width: 100%; font-size: 11px; padding: 0; }
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .unit-label { color: #b3b3b3; font-size: 10px; margin-left: 4px; white-space: nowrap; }
+    button.toggle-btn { border: 1px solid #e6e6e6; background: #f5f5f5; border-radius: 4px; padding: 0 10px; font-size: 11px; font-weight: 500; cursor: pointer; height: 24px; white-space: nowrap; }
+    button.toggle-btn:hover { background: #eee; }
+    .swap-btn { border: none; background: none; cursor: pointer; font-size: 14px; color: #b3b3b3; padding: 0 2px; height: 24px; align-self: flex-end; margin-bottom: 2px; }
+    .swap-btn:hover { color: #333; }
+    select { border: 1px solid #e6e6e6; border-radius: 4px; height: 24px; padding: 0 4px; font-size: 11px; outline: none; background: #fff; width: 100%; }
+    
+    /* Стили для выбора цвета */
+    .color-picker-wrap { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+    input[type="color"] { -webkit-appearance: none; border: none; width: 16px; height: 16px; border-radius: 3px; cursor: pointer; background: none; padding: 0; }
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"]::-webkit-color-swatch { border: 1px solid #ccc; border-radius: 3px; }
+
+    .align-block { display: flex; gap: 12px; align-items: center; margin-top: 4px; }
+    .align-fields { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .preview-box { width: 110px; height: 80px; border: 1px solid #ccc; border-radius: 4px; background: #fcfcfc; position: relative; cursor: pointer; overflow: hidden; box-sizing: border-box; display: flex; content-visibility: auto; }
+    .preview-card { position: absolute; background: #7B61FF; opacity: 0.6; border-radius: 1px; transition: all 0.2s ease; }
+    
+    .checkbox-wrap { display: flex; align-items: center; gap: 6px; margin: 10px 2px; font-weight: 500; }
+    .submit-btn { width: 100%; background: #18a0fb; color: white; border: none; border-radius: 6px; height: 32px; font-weight: 600; cursor: pointer; font-size: 12px; margin-bottom: 0; }
+    .submit-btn:hover { background: #0d8de3; }
+    .info-text { font-size: 10px; color: #666; margin-top: 6px; }
+    .info-text span { color: #18a0fb; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <div class="row" style="justify-content: flex-start; gap: 12px; margin-bottom: 12px;">
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <label>PPI:</label>
+      <div class="input-wrap" style="width: 65px;"><input type="number" id="ppi" value="300" min="1"></div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <label>Единицы:</label>
+      <button id="unit-toggle" class="toggle-btn">mm</button>
+    </div>
+  </div>
+
+  <!-- БЛОК ФОРМЫ С ПИЛЮЛЕЙ ЦВЕТА -->
+  <div class="section">
+    <div class="section-title">
+      <div class="checkbox-wrap" style="margin:0;">
+        <input type="checkbox" id="create-component" checked>
+        <label for="create-component" style="color:#111; font-size:11px; font-weight:600; cursor:pointer;">Генерировать формы на листе</label>
+      </div>
+      <div class="color-picker-wrap">
+        <input type="color" id="shape-color" value="#7B61FF">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label class="lbl-top">Ширина формы</label>
+        <div class="input-wrap"><input type="number" id="shape-w" value="65" step="any"><span class="unit-label unit-txt">mm</span></div>
+      </div>
+      <div class="col">
+        <label class="lbl-top">Высота формы</label>
+        <div class="input-wrap"><input type="number" id="shape-h" value="45" step="any"><span class="unit-label unit-txt">mm</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">Настройки печатного листа и сетки</div>
+    <div class="row">
+      <div class="col" style="flex:3;">
+        <label class="lbl-top">Ширина листа</label>
+        <div class="input-wrap"><input type="number" id="sheet-w" value="297" step="any"><span class="unit-label unit-txt">mm</span></div>
+      </div>
+      <button class="swap-btn" id="swap-dims">⇄</button>
+      <div class="col" style="flex:3;">
+        <label class="lbl-top">Высота листа</label>
+        <div class="input-wrap"><input type="number" id="sheet-h" value="210" step="any"><span class="unit-label unit-txt">mm</span></div>
+      </div>
+      <div class="col" style="flex:2;">
+        <label class="lbl-top">Формат</label>
+        <select id="sheet-preset">
+          <option value="A3">A3</option>
+          <option value="A4" selected>A4</option>
+          <option value="A5">A5</option>
+          <option value="A6">A6</option>
+          <option value="-">—</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label class="lbl-top">Зазор между формами</label>
+        <div class="input-wrap"><input type="number" id="grid-gap" value="5" step="any"><span class="unit-label unit-txt">mm</span></div>
+      </div>
+      <div class="col">
+        <label class="lbl-top">Мин. отступ от края</label>
+        <div class="input-wrap"><input type="number" id="grid-margin" value="5" step="any"><span class="unit-label unit-txt">mm</span></div>
+      </div>
+    </div>
+
+    <div class="section-title">Выравнивание объектов</div>
+    <div class="align-block">
+      <div class="align-fields">
+        <div>
+          <label class="lbl-top">По горизонтали</label>
+          <select id="align-x">
+            <option value="L">По левому краю</option><option value="C" selected>По центру</option><option value="R">По правому краю</option><option value="SPACE">Рассредоточить</option>
+          </select>
+        </div>
+        <div>
+          <label class="lbl-top">По вертикали</label>
+          <select id="align-y">
+            <option value="T">По верхнему краю</option><option value="C" selected>По центру</option><option value="B">По нижнему краю</option><option value="SPACE">Рассредоточить</option>
+          </select>
+        </div>
+      </div>
+      <div class="preview-box" id="preview-box"></div>
+    </div>
+    <div class="info-text">Форм на один лист: <span id="count-txt">0</span> шт.</div>
+  </div>
+
+  <div class="checkbox-wrap" style="margin-top: 5px; margin-bottom: 8px;">
+    <input type="checkbox" id="gen-guides" checked>
+    <label for="gen-guides" style="color:#111; cursor:pointer;">Генерировать Layout Guides сетки</label>
+  </div>
+  <button class="submit-btn" id="submit-btn">Сгенерировать раскладку</button>
+  <script>
+    let currentUnit = 'mm';
+    let ppi = 300;
+    const MM_TO_INCH = 25.4;
+    const presets = { 'A3': { w: 420, h: 297 }, 'A4': { w: 297, h: 210 }, 'A5': { w: 210, h: 148 }, 'A6': { w: 148, h: 105 } };
+
+    const elPpi = document.getElementById('ppi'), elUnitBtn = document.getElementById('unit-toggle');
+    const elShapeW = document.getElementById('shape-w'), elShapeH = document.getElementById('shape-h');
+    const elSheetW = document.getElementById('sheet-w'), elSheetH = document.getElementById('sheet-h'), elPreset = document.getElementById('sheet-preset');
+    const elGap = document.getElementById('grid-gap'), elMargin = document.getElementById('grid-margin');
+    const elAlignX = document.getElementById('align-x'), elAlignY = document.getElementById('align-y');
+    const elCountTxt = document.getElementById('count-txt'), elPreview = document.getElementById('preview-box');
+    const elCreateComp = document.getElementById('create-component'), elGenGuides = document.getElementById('gen-guides'), elColor = document.getElementById('shape-color');
+
+    const alignCycles = [{x:'L', y:'T'}, {x:'R', y:'T'}, {x:'R', y:'B'}, {x:'L', y:'B'}, {x:'C', y:'C'}, {x:'SPACE', y:'SPACE'}];
+
+    function convertValue(val, fromUnit, toUnit) {
+      if (fromUnit === toUnit) return val;
+      return fromUnit === 'mm' ? (val / MM_TO_INCH) * ppi : (val / ppi) * MM_TO_INCH;
+    }
+
+    window.onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+      if (msg && msg.type === 'load-settings' && msg.data) {
+        const d = msg.data;
+        currentUnit = d.unit || 'mm';
+        elUnitBtn.textContent = currentUnit;
+        document.querySelectorAll('.unit-txt').forEach(el => el.textContent = currentUnit);
+        elPpi.value = d.ppi || 300; ppi = parseFloat(elPpi.value);
+        elShapeW.value = d.shapeW; elShapeH.value = d.shapeH;
+        elSheetW.value = d.sheetW; elSheetH.value = d.sheetH;
+        elGap.value = d.gap; elMargin.value = d.margin;
+        elAlignX.value = d.alignX; elAlignY.value = d.alignY;
+        elCreateComp.checked = d.createComponent !== false;
+        elGenGuides.checked = d.genGuides !== false;
+        elColor.value = d.shapeColor || '#7B61FF';
+        checkPresetMatch(); calculateLayout();
+      }
+    };
+
+    elUnitBtn.onclick = () => {
+      let targetUnit = currentUnit === 'mm' ? 'px' : 'mm';
+      [elShapeW, elShapeH, elSheetW, elSheetH, elGap, elMargin].forEach(input => {
+        let v = parseFloat(input.value) || 0;
+        input.value = Number(convertValue(v, currentUnit, targetUnit).toFixed(targetUnit === 'mm' ? 1 : 0));
+      });
+      currentUnit = targetUnit; elUnitBtn.textContent = targetUnit;
+      document.querySelectorAll('.unit-txt').forEach(el => el.textContent = targetUnit);
+      calculateLayout();
+    };
+
+    elPpi.onchange = () => { ppi = parseFloat(elPpi.value) || 300; calculateLayout(); };
+    elPreset.onchange = () => {
+      const p = presets[elPreset.value];
+      if (p) {
+        elSheetW.value = Number(convertValue(p.w, 'mm', currentUnit).toFixed(currentUnit === 'mm' ? 1 : 0));
+        elSheetH.value = Number(convertValue(p.h, 'mm', currentUnit).toFixed(currentUnit === 'mm' ? 1 : 0));
+        calculateLayout();
+      }
+    };
+
+    function checkPresetMatch() {
+      let sw_mm = convertValue(parseFloat(elSheetW.value)||0, currentUnit, 'mm');
+      let sh_mm = convertValue(parseFloat(elSheetH.value)||0, currentUnit, 'mm');
+      let found = '-';
+      for (let k in presets) {
+        if ((Math.abs(presets[k].w - sw_mm) < 0.5 && Math.abs(presets[k].h - sh_mm) < 0.5) ||
+            (Math.abs(presets[k].h - sw_mm) < 0.5 && Math.abs(presets[k].w - sh_mm) < 0.5)) { found = k; break; }
+      }
+      elPreset.value = found;
+    }
+
+    [elSheetW, elSheetH].forEach(el => el.oninput = () => { checkPresetMatch(); calculateLayout(); });
+    [elShapeW, elShapeH, elGap, elMargin].forEach(el => el.oninput = calculateLayout);
+    elAlignX.onchange = elAlignY.onchange = elCreateComp.onchange = elGenGuides.onchange = elColor.oninput = calculateLayout;
+
+    document.getElementById('swap-dims').onclick = () => {
+      let tmp = elSheetW.value; elSheetW.value = elSheetH.value; elSheetH.value = tmp;
+      checkPresetMatch(); calculateLayout();
+    };
+
+    elPreview.onclick = () => {
+      let cx = elAlignX.value, cy = elAlignY.value;
+      let idx = alignCycles.findIndex(a => a.x === cx && a.y === cy);
+      let next = alignCycles[(idx + 1) % alignCycles.length];
+      elAlignX.value = next.x; elAlignY.value = next.y;
+      calculateLayout();
+    };
+
+    function renderPreview(sw, sh, iw, ih, g, m, cols, rows) {
+      elPreview.innerHTML = ''; if(sw <= 0 || sh <= 0) return;
+      let boxW = elPreview.clientWidth, boxH = elPreview.clientHeight;
+      let scale = Math.min((boxW - 8) / sw, (boxH - 8) / sh);
+      let pW = sw * scale, pH = sh * scale;
+      let page = document.createElement('div');
+      page.style.cssText = `position:absolute; left:${(boxW-pW)/2}px; top:${(boxH-pH)/2}px; width:${pW}px; height:${pH}px; border:1px solid #aaa; background:#fff;`;
+      elPreview.appendChild(page);
+      if(cols <= 0 || rows <= 0) return;
+
+      let piw = iw * scale, pih = ih * scale, pg = g * scale, pm = m * scale;
+      let finalGapX = pg, finalGapY = pg, startX = pm, startY = pm;
+
+      if (elAlignX.value === 'SPACE') { if (cols > 1) finalGapX = (pW - (pm * 2) - (cols * piw)) / (cols - 1); } 
+      else { let cw = cols * piw + (cols - 1) * pg; if (elAlignX.value === 'C') startX = (pW - cw) / 2; else if (elAlignX.value === 'R') startX = pW - cw - pm; }
+
+      if (elAlignY.value === 'SPACE') { if (rows > 1) finalGapY = (pH - (pm * 2) - (rows * pih)) / (rows - 1); } 
+      else { let ch = rows * pih + (rows - 1) * pg; if (elAlignY.value === 'C') startY = (pH - ch) / 2; else if (elAlignY.value === 'B') startY = pH - ch - pm; }
+
+      const userColor = elColor.value;
+      for(let r=0; r<rows; r++) {
+        for(let c=0; c<cols; c++) {
+          let card = document.createElement('div'); card.className = 'preview-card';
+          card.style.cssText = `width:${piw}px; height:${pih}px; left:${startX + c * (piw + finalGapX)}px; top:${startY + r * (pih + finalGapY)}px; background:${userColor};`;
+          page.appendChild(card);
+        }
+      }
+    }
+
+    function calculateLayout() {
+      let sw = parseFloat(elSheetW.value)||0, sh = parseFloat(elSheetH.value)||0, iw = parseFloat(elShapeW.value)||0, ih = parseFloat(elShapeH.value)||0, g = parseFloat(elGap.value)||0, m = parseFloat(elMargin.value)||0;
+      if (iw<=0 || ih<=0 || sw<=0 || sh<=0) { elCountTxt.textContent = '0'; elPreview.innerHTML=''; return; }
+      let avW = sw - (m * 2), avH = sh - (m * 2);
+      let cols = avW >= iw ? 1 + Math.floor((avW - iw) / (iw + g)) : 0;
+      let rows = avH >= ih ? 1 + Math.floor((avH - ih) / (ih + g)) : 0;
+      elCountTxt.textContent = cols * rows;
+      renderPreview(sw, sh, iw, ih, g, m, cols, rows);
+    }
+
+    document.getElementById('submit-btn').onclick = () => {
+      parent.postMessage({ pluginMessage: {
+        type: 'generate-layout', unit: currentUnit, ppi: parseFloat(elPpi.value)||300,
+        shapeW: parseFloat(elShapeW.value)||0, shapeH: parseFloat(elShapeH.value)||0,
+        sheetW: parseFloat(elSheetW.value)||0, sheetH: parseFloat(elSheetH.value)||0,
+        gap: parseFloat(elGap.value)||0, margin: parseFloat(elMargin.value)||0,
+        alignX: elAlignX.value, alignY: elAlignY.value,
+        createComponent: elCreateComp.checked, genGuides: elGenGuides.checked,
+        shapeColor: elColor.value
+      }}, '*');
+    };
+  </script>
+</body>
+</html>

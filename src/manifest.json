@@ -1,5 +1,5 @@
 {
-  "name": "Svelte Plugin Template",
+  "name": "Compositor",
   "id": "YOUR_PLUGIN_ID",
   "api": "1.0.0",
   "main": "code.js",
